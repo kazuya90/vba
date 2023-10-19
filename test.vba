@@ -68,13 +68,3 @@ Sub CopyActiveRangeWithNumber2()
 End Sub
 ```
 
-
-J3	K3
-J4	K4
-J5	K5
-J6	K6
-J7	K7
-J8	K8
-J9	K9
-
-
