@@ -119,3 +119,11 @@ Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, col
   GetValuesByRowAndColumn = result
   End If
 End Function
+
+'comboboxへ1,100を追加する関数
+Sub addItemsToComboBox()
+    Dim i As Integer
+    For i = 1 To 100
+        UserForm.ComboBox1.AddItem i
+    Next i
+End Sub
