@@ -1,8 +1,9 @@
-Sub main()
-    sub_main 1, 2
+Sub show()
+    UserForm.show 1
 End Sub
+
 'main関数
-Sub sub_main(returnNumber As Integer, colNumber As Integer)
+Sub main(returnNumber As Integer, colNumber As Integer)
     Dim sheetName As String
     sheetName = ActiveSheet.Name
     Dim rownumbers As Variant
@@ -104,6 +105,11 @@ Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, col
   Dim result() As Variant
   Dim count As Long
   
+  If IsEmpty(rownumbers) Then
+    MsgBox "コピー対象がありません"
+    End
+  Else
+  
   ReDim result(1 To UBound(rownumbers))
   
   For i = 1 To UBound(rownumbers)
@@ -111,6 +117,5 @@ Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, col
   Next i
   
   GetValuesByRowAndColumn = result
+  End If
 End Function
-
-
