@@ -34,7 +34,12 @@ Function GetNumbersArray(arr As Variant) As Variant
     Dim i As Integer
     Dim numbersArray() As Variant
     ReDim numbersArray(UBound(arr))
+
+    
     For i = 1 To UBound(arr)
+    if(isContainsNewLine(arr(i)))then
+        numbersArray(i) = 丸数字(i) & vbCrLf & arr(i)
+    else
         numbersArray(i) = 丸数字(i) & arr(i)
     Next i
     GetNumbersArray = numbersArray
@@ -127,3 +132,12 @@ Sub addItemsToComboBox()
         UserForm.ComboBox1.AddItem i
     Next i
 End Sub
+
+'改行を含む文字列か判断する関数
+Function isContainsNewLine(str As String) As Boolean
+    If InStr(str, vbCrLf) > 0 Then
+        isContainsNewLine = True
+    Else
+        isContainsNewLine = False
+    End If
+End Function
