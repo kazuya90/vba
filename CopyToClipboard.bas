@@ -18,20 +18,6 @@ Sub sub_main(returnNumber As Integer, colNumber As Integer)
     CopyArrayToClipboard (numbersArray)
 End Sub
 
-'アクティブなセルの範囲を配列として返す関数
-'一次元
-Function GetActiveRange() As Variant
-    Dim activeRange As Range
-    Dim arr() As Variant
-    Set activeRange = Application.Selection
-    ReDim arr(activeRange.count - 1)
-    Dim i As Integer
-    For i = 0 To activeRange.count - 1
-        arr(i) = activeRange(i + 1)
-    Next i
-    GetActiveRange = arr
-End Function
-
 '引数に可変長の配列をとり、numbers+引数の配列として返す関数、
 Function GetNumbersArray(arr As Variant) As Variant
     Dim i As Integer
@@ -56,25 +42,7 @@ Sub CopyArrayToClipboard(arr As Variant)
     End With
 End Sub
 
-'丸数字を返す
-Function 丸数字(ByVal n As Long) As String
-    Select Case n
-    Case 1 To 20
-        丸数字 = Chr(Asc("①") + n - 1)
-        
-    Case 21 To 35
-        丸数字 = ChrW(12881 + n - 21)
 
-    Case 36 To 50
-        丸数字 = ChrW(12977 + n - 21)
-        
-    Case 0
-        丸数字 = ChrW(9450)
-        
-    Case Else
-        丸数字 = "(" & n & ")"
-    End Select
-End Function
 
 '特定の値のセルの行番号を配列として返す関数
 Function FindRowsWithValue(sheetName As String, columnNumber As Integer, searchValue As String) As Variant
@@ -122,11 +90,6 @@ Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, col
   GetValuesByRowAndColumn = result
   End If
 End Function
-'comboboxへ1,100を追加する関数
-Sub addItemsToComboBox()
-    Dim i As Integer
-    For i = 1 To 100
-        UserForm.rbox.AddItem i
-        UserForm.box.AddItem i
-    Next i
-End Sub
+
+
+
