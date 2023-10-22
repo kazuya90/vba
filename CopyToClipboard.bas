@@ -1,15 +1,56 @@
 'main関数
-Sub main(returnNumber As Integer, colNumber As Integer)
+Sub main(returnrowNumber As Integer, rowNumber As Integer)
     Dim sheetName As String
     sheetName = ActiveSheet.Name
-    Dim rownumbers As Variant
-    rownumbers = FindRowsWithValue(sheetName, colNumber, "●")
+    Dim columnNumbers As Variant
+    columnNumbers = GetColumnNumberByValue(sheetName, rowNumber, "●")
     Dim values As Variant
-    values = GetValuesByRowAndColumn(sheetName, rownumbers, returnNumber)
+    values = GetValuesByColumnAndRowNumber(columnNumbers, returnrowNumber)
     Dim numbersArray As Variant
     numbersArray = GetNumbersArray(values)
-    CopyArrayToClipboard (numbersArray)
+    CopyArrayToClipboard numbersArray
+    MsgBox "コピーしました"
 End Sub
+
+
+'特定の値のセルの列番号を配列として返す関数
+'引数はシート名、行番号、検索する値
+Function GetColumnNumberByValue(sheetName As String, rowNumber As Integer, value As String) As Variant
+    Dim i As Integer
+    Dim result() As Variant
+    Dim count As Integer
+    count = 0
+    For i = 1 To Sheets(sheetName).Cells(rowNumber, Columns.count).End(xlToLeft).Column
+        If Sheets(sheetName).Cells(rowNumber, i).value = value Then
+            count = count + 1
+            ReDim Preserve result(1 To count)
+            result(count) = i
+        End If
+    Next i
+    GetColumnNumberByValue = result
+End Function
+
+'数値の配列と数値を引数にとり、その配列は列番号として、引数の数値を行番号として持つセルの値を配列として返す関数
+Function GetValuesByColumnAndRowNumber(arr As Variant, rowNumber As Integer) As Variant
+    Dim i As Integer
+    Dim result() As Variant
+    Dim count As Integer
+    count = 0
+    On Error GoTo Label100
+    For i = 1 To UBound(arr)
+        count = count + 1
+        ReDim Preserve result(1 To count)
+        result(count) = ActiveSheet.Cells(rowNumber, arr(i)).value
+    Next i
+    On Error GoTo 0
+    GetValuesByColumnAndRowNumber = result
+    Exit Function
+
+Label100:
+    MsgBox "対象がありません"
+    End
+    
+End Function
 
 '引数に可変長の配列をとり、numbers+引数の配列として返す関数、
 Function GetNumbersArray(arr As Variant) As Variant
@@ -37,52 +78,11 @@ End Sub
 
 
 
-'特定の値のセルの行番号を配列として返す関数
-Function FindRowsWithValue(sheetName As String, columnNumber As Integer, searchValue As String) As Variant
-  Dim lastRow As Long
-  Dim i As Long
-  Dim result() As Long
-  Dim count As Long
-  
-  lastRow = Sheets(sheetName).Cells(Rows.count, columnNumber).End(xlUp).Row
-  
-  ReDim result(1 To lastRow)
-  
-  For i = 1 To lastRow
-    If Sheets(sheetName).Cells(i, columnNumber).Value = searchValue Then
-      count = count + 1
-      result(count) = i
-    End If
-  Next i
-  
-  If count = 0 Then
-    FindRowsWithValue = Empty
-  Else
-    ReDim Preserve result(1 To count)
-    FindRowsWithValue = result
-  End If
-End Function
 
-'数値の配列と数値を引数にとり、その配列は行番号として、引数の数値を列番号として持つセルの値を配列として返す関数
-Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, columnNumber As Integer) As Variant
-  Dim i As Long
-  Dim result() As Variant
-  Dim count As Long
-  
-  If IsEmpty(rownumbers) Then
-    MsgBox "コピー対象がありません"
-    End
-  Else
-  
-  ReDim result(1 To UBound(rownumbers))
-  
-  For i = 1 To UBound(rownumbers)
-    result(i) = Sheets(sheetName).Cells(rownumbers(i), columnNumber).Value
-  Next i
-  
-  GetValuesByRowAndColumn = result
-  End If
-End Function
+
+
+
+
 
 
 
