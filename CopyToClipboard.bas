@@ -1,9 +1,12 @@
 Sub show()
-    UserForm.show 1
+    UserForm.show 0
 End Sub
 
+Sub main()
+    sub_main 1, 2
+End Sub
 'main関数
-Sub main(returnNumber As Integer, colNumber As Integer)
+Sub sub_main(returnNumber As Integer, colNumber As Integer)
     Dim sheetName As String
     sheetName = ActiveSheet.Name
     Dim rownumbers As Variant
@@ -34,12 +37,7 @@ Function GetNumbersArray(arr As Variant) As Variant
     Dim i As Integer
     Dim numbersArray() As Variant
     ReDim numbersArray(UBound(arr))
-
-    
     For i = 1 To UBound(arr)
-    if(isContainsNewLine(arr(i)))then
-        numbersArray(i) = 丸数字(i) & vbCrLf & arr(i)
-    else
         numbersArray(i) = 丸数字(i) & arr(i)
     Next i
     GetNumbersArray = numbersArray
@@ -124,20 +122,11 @@ Function GetValuesByRowAndColumn(sheetName As String, rownumbers As Variant, col
   GetValuesByRowAndColumn = result
   End If
 End Function
-
 'comboboxへ1,100を追加する関数
 Sub addItemsToComboBox()
     Dim i As Integer
     For i = 1 To 100
-        UserForm.ComboBox1.AddItem i
+        UserForm.rbox.AddItem i
+        UserForm.box.AddItem i
     Next i
 End Sub
-
-'改行を含む文字列か判断する関数
-Function isContainsNewLine(str As String) As Boolean
-    If InStr(str, vbCrLf) > 0 Then
-        isContainsNewLine = True
-    Else
-        isContainsNewLine = False
-    End If
-End Function
