@@ -26,3 +26,7 @@ Function ŠÛ”š(ByVal n As Long) As String
         ŠÛ”š = "(" & n & ")"
     End Select
 End Function
+
+Sub show()
+    UserForm.show 0
+End Sub
