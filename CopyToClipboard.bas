@@ -1,12 +1,5 @@
-Sub show()
-    UserForm.show 0
-End Sub
-
-Sub main()
-    sub_main 1, 2
-End Sub
 'main関数
-Sub sub_main(returnNumber As Integer, colNumber As Integer)
+Sub main(returnNumber As Integer, colNumber As Integer)
     Dim sheetName As String
     sheetName = ActiveSheet.Name
     Dim rownumbers As Variant
